@@ -51,13 +51,16 @@ public class Converter {
     public boolean convertPictures(String format, String path){
         for(File file : this.files) {
             String newPath = file.getAbsolutePath().replace('\\','/').replace(this.rootPath,path);
+            System.out.println(newPath);
             if (file.isDirectory()) {
                 new File(path + file.getPath()).mkdirs();
             } else {
                 try {
                     ImageIO.write(ImageIO.read(file),
                             format,
-                            new File(path + file.getName().split("\\.(?=[^\\.]+$)")[0] + "." + format));
+                            new File(
+                                    //path + file.getName()
+                                    newPath.split("\\.(?=[^\\.]+$)")[0] + "." + format));
                 } catch (IOException e) {
                     e.printStackTrace();
                     return false;
