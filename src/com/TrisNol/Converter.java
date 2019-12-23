@@ -3,10 +3,14 @@ package com.TrisNol;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Converter {
     private File folder;
     private File[] files;
+
+    private LinkedList<File> fileList;
 
     public boolean readFolder(String path){
         try {
@@ -19,6 +23,16 @@ public class Converter {
         }catch(Exception e){
             return false;
         }
+    }
+
+    public boolean readFolderRecursive(String path){
+        try{
+            folder = new File(path);
+            this.fileList.addAll(Arrays.asList(folder.listFiles()));
+        }catch(Exception e){
+            return false;
+        }
+        return true;
     }
 
     public boolean convertPictures(String format, String path){
