@@ -32,6 +32,7 @@ public class Converter {
             List<File> node = Arrays.asList(folder.listFiles());
             node.forEach(item->{
                 if(item.isDirectory()){
+                    System.out.println("Folder ");
                     this.readFolderRecursive(item.getPath());
                 }
             });
