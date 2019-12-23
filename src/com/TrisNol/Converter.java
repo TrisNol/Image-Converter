@@ -11,7 +11,13 @@ public class Converter {
     private File folder;
     private File[] files;
 
+    private String rootPath;
+
     private LinkedList<File> fileList;
+
+    public Converter(String root){
+        this.rootPath = root;
+    }
 
     public boolean readFolder(String path){
         try {
@@ -43,19 +49,19 @@ public class Converter {
     }
 
     public boolean convertPictures(String format, String path){
-        for(File file : this.files){
-            /*
-            if (file.isDirectory()){
-                new File(path + file.getName()).mkdirs();
-                this.files = ArrayUtils.addAll(this.files, file.listFiles());
-            }
-            */
-            try {
-                ImageIO.write(ImageIO.read(file),
-                        format,
-                        new File(path + file.getName().split("\\.(?=[^\\.]+$)")[0]+"."+format));
-            }catch(IOException e) {
-                return false;
+        for(File file : this.files) {
+            System.out.println(file.getPath());
+            if (file.isDirectory()) {
+                new File(path + file.getAbsolutePath()).mkdirs();
+            } else {
+                try {
+                    ImageIO.write(ImageIO.read(file),
+                            format,
+                            new File(path + file.getName().split("\\.(?=[^\\.]+$)")[0] + "." + format));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return false;
+                }
             }
         }
         return true;

@@ -29,15 +29,15 @@ public class Main {
 
     private static void testing(){
         Converter converter = new Converter();
-        String pathInput = "C:\\Users\\Tristan\\Desktop\\Test_Input";
-        String pathOutput = "C:\\Users\\Tristan\\Desktop\\Test_Output";
+        String pathInput = "C:/Users/Tristan/Desktop/Test_Input";
+        String pathOutput = "C:/Users/Tristan/Desktop/Test_Output";
         if(converter.readFolder(pathInput)){
             System.out.println("Folder has been read ");
         }else{
             System.out.println("No Files found");
             return;
         }
-        String format = ".png";
+        String format = "png";
         if(converter.convertPictures(format,pathOutput)){
             System.out.println("Images have been converted");
         }else{
