@@ -50,9 +50,9 @@ public class Converter {
 
     public boolean convertPictures(String format, String path){
         for(File file : this.files) {
-            System.out.println(file.getPath());
+            String newPath = file.getAbsolutePath().replace('\\','/').replace(this.rootPath,path);
             if (file.isDirectory()) {
-                new File(path + file.getAbsolutePath()).mkdirs();
+                new File(path + file.getPath()).mkdirs();
             } else {
                 try {
                     ImageIO.write(ImageIO.read(file),
