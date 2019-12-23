@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Converter {
     private File folder;
@@ -28,7 +29,13 @@ public class Converter {
     public boolean readFolderRecursive(String path){
         try{
             folder = new File(path);
-            this.fileList.addAll(Arrays.asList(folder.listFiles()));
+            List<File> node = Arrays.asList(folder.listFiles());
+            node.forEach(item->{
+                if(item.isDirectory()){
+                    this.readFolderRecursive(item.getPath());
+                }
+            });
+            this.fileList.addAll(node);
         }catch(Exception e){
             return false;
         }
