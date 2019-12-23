@@ -1,5 +1,7 @@
 package com.TrisNol;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +20,7 @@ public class Converter {
     private String target;
 
     private List<File> fileList;
+
     public Converter(String root, String target){
         this.rootPath = root;
         this.fileList = new LinkedList<>();
@@ -43,7 +46,7 @@ public class Converter {
             List<File> node = Arrays.asList(folder.listFiles());
             node.forEach(item->{
                 if(!Files.isRegularFile(item.toPath())){
-                    new File(item.getAbsolutePath().replace('\\','/').replace(this.rootPath,this.target)).mkdirs();
+                    new File(this.buildPath(item,this.rootPath,this.target)).mkdirs();
                     this.readFolderRecursive(item.getPath());
                 }
             });
@@ -58,7 +61,7 @@ public class Converter {
         for(File file : this.fileList) {
             if (!file.isDirectory()) {
                 System.out.println(file);
-                String newPath = file.getAbsolutePath().replace('\\', '/').replace(this.rootPath, path);
+                String newPath = this.buildPath(file, this.rootPath, path);
                 try {
                     ImageIO.write(ImageIO.read(file),
                             format,
@@ -70,5 +73,10 @@ public class Converter {
             }
         }
         return true;
+    }
+
+    @NotNull
+    private String buildPath(File file, String old, String edited){
+        return file.getAbsolutePath().replace('\\', '/').replace(old, edited);
     }
 }
